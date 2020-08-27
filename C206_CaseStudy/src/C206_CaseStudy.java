@@ -10,24 +10,25 @@ public class C206_CaseStudy {
 		ArrayList<history> transHistory = new ArrayList<history>();
 
 		int option = 0;
-		while (option != 14) {
+		while (option != 16) {
 			System.out.println("MONEY EXCHANGE MANAGEMENT SYSTEM");
-			System.out.println("==============");
+			System.out.println("=================================");
 			System.out.println("1. Add Currency");
 			System.out.println("2. Delete Currency");
 			System.out.println("3. Update Currency");
-			System.out.println("4. View Holdings");
-			System.out.println("5. Add Holdings");
-			System.out.println("6. Delete Holdings");
-			System.out.println("7. Update Holdings");
-			System.out.println("8. Search ISO");
-			System.out.println("9. Update ISO");
-			System.out.println("10. Search Currency");
-			System.out.println("11. Convert Currency");
-			System.out.println("12. Add Threshold");
-			System.out.println("13. View Transaction Summary");
-			System.out.println("14. Add Transaction");
-			System.out.println("15. Quit");
+			System.out.println("4. View Currency List");
+			System.out.println("5. View Holdings");
+			System.out.println("6. Add Holdings");
+			System.out.println("7. Delete Holdings");
+			System.out.println("8. Update Holdings");
+			System.out.println("9. Search ISO");
+			System.out.println("10. Update ISO");
+			System.out.println("11. Search Currency");
+			System.out.println("12. Convert Currency");
+			System.out.println("13. Add Threshold");
+			System.out.println("14. View Transaction Summary");
+			System.out.println("15. Add Transaction");
+			System.out.println("16. Quit");
 
 			option = Helper.readInt("Enter Option > ");
 
@@ -38,28 +39,30 @@ public class C206_CaseStudy {
 			} else if (option == 3) {
 				C206_CaseStudy.updateCurrency(currencyList);
 			} else if (option == 4) {
-				C206_CaseStudy.viewHoldings(holdingList);
+				C206_CaseStudy.viewCurrency(currencyList);
 			} else if (option == 5) {
-				C206_CaseStudy.addHoldings(holdingList);
+				C206_CaseStudy.viewHoldings(holdingList);
 			} else if (option == 6) {
-				C206_CaseStudy.deleteHoldings(holdingList);
+				C206_CaseStudy.addHoldings(holdingList);
 			} else if (option == 7) {
-				C206_CaseStudy.updateHoldings(holdingList);
+				C206_CaseStudy.deleteHoldings(holdingList);
 			} else if (option == 8) {
-				C206_CaseStudy.searchISO(holdingList);
+				C206_CaseStudy.updateHoldings(holdingList);
 			} else if (option == 9) {
-				C206_CaseStudy.updateISO(holdingList);
+				C206_CaseStudy.searchISO(holdingList);
 			} else if (option == 10) {
-				C206_CaseStudy.searchCurrency(currencyList);
+				C206_CaseStudy.updateISO(holdingList);
 			} else if (option == 11) {
-				C206_CaseStudy.convertCurrency(currencyList);
+				C206_CaseStudy.searchCurrency(currencyList);
 			} else if (option == 12) {
-				C206_CaseStudy.addThreshold(holdingList);
+				C206_CaseStudy.convertCurrency(currencyList);
 			} else if (option == 13) {
-				C206_CaseStudy.viewTransactionsSummary(transHistory);
+				C206_CaseStudy.addThreshold(holdingList);
 			} else if (option == 14) {
-				C206_CaseStudy.addTransaction(transHistory);
+				C206_CaseStudy.viewTransactionsSummary(transHistory);
 			} else if (option == 15) {
+				C206_CaseStudy.addTransaction(transHistory);
+			} else if (option == 16) {
 				System.out.println("Thank you and Good Bye!");
 			} else {
 				System.out.println("Invalid Option!");
@@ -67,6 +70,15 @@ public class C206_CaseStudy {
 		}
 
 	} // Main
+	
+	public static void viewCurrency(ArrayList<CurrencyClass> currencyList) {
+		System.out.println(String.format("%-10s %-30s %-10s %-10s %8s\n", "ISO", "Currency Name", "Buy Rate",
+				"Sell Rate", "Date Added"));
+		for (int i = 0; i < currencyList.size(); i++) {
+			CurrencyClass t = currencyList.get(i);
+			System.out.println(currencyList.get(i).toString() + t.getDate());
+		}
+	}
 
 	public static void addCurrency(ArrayList<CurrencyClass> currencyList) {
 		String iso = Helper.readString("ISO: ");
@@ -90,25 +102,26 @@ public class C206_CaseStudy {
 		String iso1 = Helper.readString("ISO of currency to delete: ");
 		for (int i = 0; i < currencyList.size(); i++) {
 			CurrencyClass t = currencyList.get(i);
-			if (iso1.equalsIgnoreCase(t.getIso())) {
-				currencyList.remove(i);
-				isDeleted = true;
-			} // delete currency
-				// for
-
-			if (isDeleted == true) {
-				System.out.println("Currency deleted.");
-				System.out.println(String.format("%-10s %-30s %-10s %-10s %8s\n", "ISO", "Currency Name", "Buy Rate",
-						"Sell Rate", "Date Added"));
-				for (int k = 0; k < currencyList.size(); i++) {
-					CurrencyClass j = currencyList.get(i);
-					System.out.println(currencyList.get(i).toString() + j.getDate());
-				} // view all currencies
-			}
-
-			else {
-				System.out.println("Currency not found.");
-			}
+				if (iso1.equalsIgnoreCase(t.getIso())) {
+					currencyList.remove(i);
+					isDeleted = true;
+					System.out.println(String.format("%-10s %-30s %-10s %-10s %8s\n", "ISO", "Currency Name", "Buy Rate",
+							"Sell Rate", "Date Added"));
+					for (int x = 0; x < currencyList.size(); x++) {
+						CurrencyClass y = currencyList.get(x);
+						System.out.println(currencyList.get(x).toString() + y.getDate());
+				} 
+				
+				}
+			
+			} // for
+		
+		if (isDeleted == true) {
+			System.out.println("Currency deleted.");
+		}
+		
+		else {
+			System.out.println("Currency not found.");
 		}
 	}
 
@@ -123,20 +136,21 @@ public class C206_CaseStudy {
 				currencyList.add(new CurrencyClass(updateiso, t.getCurrencyName(), buy, sell, LocalDate.now()));
 				currencyList.remove(i);
 				isDeleted = true;
+				System.out.println(String.format("%-10s %-30s %-10s %-10s %8s\n", "ISO", "Currency Name", "Buy Rate",
+						"Sell Rate", "Date Added"));
+				for (int x = 0; x < currencyList.size(); x++) {
+					CurrencyClass y = currencyList.get(x);
+					System.out.println(currencyList.get(x).toString() + y.getDate());
 			}
 
 		} // for
 
 		if (isDeleted == true) {
 			System.out.println("Currency updated.");
-			System.out.println(String.format("%-10s %-30s %-10s %-10s %8s\n", "ISO", "Currency Name", "Buy Rate",
-					"Sell Rate", "Date Added"));
-			for (int i = 0; i < currencyList.size(); i++) {
-				CurrencyClass t = currencyList.get(i);
-				System.out.println(currencyList.get(i).toString() + t.getDate());
-			} // view all currencies
+			
 		} else {
 			System.out.println("Currency unable to update.");
+		}
 		}
 	} // update currencies method
 
@@ -320,7 +334,7 @@ public class C206_CaseStudy {
 				String ccy = keySet[i].substring(0, keySet[i].indexOf("."));
 				String type = keySet[i].substring(keySet[i].indexOf(".") + 1);
 				Integer val = summary.get(keySet[i]);
-				output += String.format("%-5s %-5s %-20s\n", ccy, type, val);
+				output += String.format("%-5s %-5s %-5s %-20s\n", ccy, type, ccyType, val);
 			}
 			System.out.println(output);
 		}
@@ -445,6 +459,7 @@ public class C206_CaseStudy {
 
 		}
 		System.out.println("Transaction has been added!");
+		System.out.println(output);
 	}
 
 } // class
