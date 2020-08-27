@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.time.LocalDate;
@@ -70,7 +71,7 @@ public class C206_CaseStudy {
 		}
 
 	} // Main
-	
+
 	public static void viewCurrency(ArrayList<CurrencyClass> currencyList) {
 		System.out.println(String.format("%-10s %-30s %-10s %-10s %8s\n", "ISO", "Currency Name", "Buy Rate",
 				"Sell Rate", "Date Added"));
@@ -102,24 +103,24 @@ public class C206_CaseStudy {
 		String iso1 = Helper.readString("ISO of currency to delete: ");
 		for (int i = 0; i < currencyList.size(); i++) {
 			CurrencyClass t = currencyList.get(i);
-				if (iso1.equalsIgnoreCase(t.getIso())) {
-					currencyList.remove(i);
-					isDeleted = true;
-					System.out.println(String.format("%-10s %-30s %-10s %-10s %8s\n", "ISO", "Currency Name", "Buy Rate",
-							"Sell Rate", "Date Added"));
-					for (int x = 0; x < currencyList.size(); x++) {
-						CurrencyClass y = currencyList.get(x);
-						System.out.println(currencyList.get(x).toString() + y.getDate());
-				} 
-				
+			if (iso1.equalsIgnoreCase(t.getIso())) {
+				currencyList.remove(i);
+				isDeleted = true;
+				System.out.println(String.format("%-10s %-30s %-10s %-10s %8s\n", "ISO", "Currency Name", "Buy Rate",
+						"Sell Rate", "Date Added"));
+				for (int x = 0; x < currencyList.size(); x++) {
+					CurrencyClass y = currencyList.get(x);
+					System.out.println(currencyList.get(x).toString() + y.getDate());
 				}
-			
-			} // for
-		
+
+			}
+
+		} // for
+
 		if (isDeleted == true) {
 			System.out.println("Currency deleted.");
 		}
-		
+
 		else {
 			System.out.println("Currency not found.");
 		}
@@ -141,16 +142,16 @@ public class C206_CaseStudy {
 				for (int x = 0; x < currencyList.size(); x++) {
 					CurrencyClass y = currencyList.get(x);
 					System.out.println(currencyList.get(x).toString() + y.getDate());
+				}
+
+			} // for
+
+			if (isDeleted == true) {
+				System.out.println("Currency updated.");
+
+			} else {
+				System.out.println("Currency unable to update.");
 			}
-
-		} // for
-
-		if (isDeleted == true) {
-			System.out.println("Currency updated.");
-			
-		} else {
-			System.out.println("Currency unable to update.");
-		}
 		}
 	} // update currencies method
 
@@ -197,7 +198,6 @@ public class C206_CaseStudy {
 		Helper.line(40, "-");
 		System.out.println("Update Transaction");
 		Helper.line(40, "-");
-
 		String ISO = Helper.readString("Enter ISO > ");
 		double newAmt = Helper.readDouble("Enter New Amount > ");
 		String output = String.format("%-10s %-15s %-10s %-10s \n", "ISO", "HOLDINGS", "SGD VALUE", "THRESHOLD");
@@ -210,68 +210,6 @@ public class C206_CaseStudy {
 					t.getThreshold());
 		}
 		System.out.println(output);
-	}
-
-	public static void searchCurrency(ArrayList<CurrencyClass> currencyList) {
-		System.out.println(String.format("%-10s %-30s %-10s %-10s\n", "ISO", "Currency Name", "Buy Rate", "Sell Rate"));
-
-		for (int i = 0; i < currencyList.size(); i++) {
-			System.out.println(currencyList.get(i).toString());
-		}
-
-		String currencySearch = Helper.readString("Enter currency to search > ");
-
-		boolean isFound = false; // to indicate whether object has been found
-		{
-			for (int i = 0; i < (currencyList).size(); i++) {
-				if (currencyList.get(i) != null && currencyList.get(i).getIso().equalsIgnoreCase(currencySearch)) {
-					isFound = true;
-					System.out.println(currencyList.get(i));
-					break;
-
-				}
-			}
-
-			if (isFound == false) {
-				System.out.println("No such currency was found");
-			}
-		}
-	}
-
-	// currency convert
-	public static String convertCurrency(ArrayList<CurrencyClass> currencyList) {
-		String currencyinput = Helper.readString("Input CURRENCY (E.G. USD) > ");
-		String amount = Helper.readString("Input AMOUNT > ");
-		String confirm = Helper.readString("Are you sure? (YES/NO) > ");
-		String output = String.format("%10s %10s\n", "BUY RATE", "SELL RATE");
-
-		int b = 0;
-		try {
-			b = Integer.parseInt(amount);
-		} catch (Exception e) {
-			System.out.println("No match found");
-			return "";
-		}
-		boolean found = false;
-
-		for (CurrencyClass i : currencyList) {
-			String CURRENCY = i.getIso();
-			if (CURRENCY.toUpperCase().contains(currencyinput.toUpperCase())) {
-				found = true;
-				int BUYRATE = (int) (b * i.getBuyRate());
-				int SELLRATE = (int) (b * i.getSellRate());
-				output += String.format("%10s %10s", BUYRATE, SELLRATE);
-			}
-		}
-
-		if (found == true && confirm.equalsIgnoreCase("Yes")) {
-			System.out.println(output);
-		} else {
-			System.out.println("No match found, or error input");
-		}
-
-		return output;
-
 	}
 
 	public static void viewTransactionsSummary(ArrayList<history> transHistory) {
@@ -340,47 +278,66 @@ public class C206_CaseStudy {
 		}
 	}
 
-	public static void addHoldings(ArrayList<MoneyHolding> moneyList) {
-		double CurrentFloat = 100000;
-		String Currency = Helper.readString("Currency (ISO): ");
-		double add1 = Helper.readDouble("Value: ");
+	public static void searchCurrency(ArrayList<CurrencyClass> currencyList) {
+		System.out.println(String.format("%-10s %-30s %-10s %-10s\n", "ISO", "Currency Name", "Buy Rate", "Sell Rate"));
 
-		String output = String.format("%-10s \n", "Holding Amount: ");
-		// double total =+ (hold1.getholdingAmt());
-		double add2 = add1 + CurrentFloat;
-		if (add2 > CurrentFloat) {
-			CurrentFloat = add2;
+		for (int i = 0; i < currencyList.size(); i++) {
+			System.out.println(currencyList.get(i).toString());
 		}
-		for (int i = 0; i < moneyList.size(); i++) {
-			MoneyHolding t = moneyList.get(i);
-			if (Currency.equalsIgnoreCase(t.getIso())) {
-				t.setHoldingAmt(CurrentFloat);
-				output += String.format("%-10.2f \n", t.getHoldingAmt());
+
+		String currencySearch = Helper.readString("Enter currency to search > ");
+
+		boolean isFound = false; // to indicate whether object has been found
+		{
+			for (int i = 0; i < (currencyList).size(); i++) {
+				if (currencyList.get(i) != null && currencyList.get(i).getIso().equalsIgnoreCase(currencySearch)) {
+					isFound = true;
+					System.out.println(currencyList.get(i));
+					break;
+
+				}
 			}
 
+			if (isFound == false) {
+				System.out.println("No such currency was found");
+			}
 		}
-		System.out.println(output);
 	}
 
-	public static void deleteHoldings(ArrayList<MoneyHolding> moneyList) {
-		double CurrentFloat = 100000;
-		String Currency = Helper.readString("Currency (ISO): ");
-		double minus1 = Helper.readDouble("Value: ");
+	// currency convert
+	public static String convertCurrency(ArrayList<CurrencyClass> currencyList) {
+		String currencyinput = Helper.readString("Input CURRENCY (E.G. USD) > ");
+		String amount = Helper.readString("Input AMOUNT > ");
+		String confirm = Helper.readString("Are you sure? (YES/NO) > ");
+		String output = String.format("%10s %10s\n", "BUY RATE", "SELL RATE");
 
-		String output = String.format("%-10s \n", "Holding Amount: ");
-		// double MinusValue = CurrentFloat - hold2.getholdingAmt();
-		double minus2 = CurrentFloat - minus1;
-		if (minus2 < CurrentFloat) {
-			CurrentFloat = minus2;
+		int b = 0;
+		try {
+			b = Integer.parseInt(amount);
+		} catch (Exception e) {
+			System.out.println("No match found");
+			return "";
 		}
-		for (int i = 0; i < moneyList.size(); i++) {
-			MoneyHolding t = moneyList.get(i);
-			if (Currency.equalsIgnoreCase(t.getIso())) {
-				t.setHoldingAmt(CurrentFloat);
-				output += String.format("%-10.2f \n", t.getHoldingAmt());
+		boolean found = false;
+
+		for (CurrencyClass i : currencyList) {
+			String CURRENCY = i.getIso();
+			if (CURRENCY.toUpperCase().contains(currencyinput.toUpperCase())) {
+				found = true;
+				int BUYRATE = (int) (b * i.getBuyRate());
+				int SELLRATE = (int) (b * i.getSellRate());
+				output += String.format("%10s %10s", BUYRATE, SELLRATE);
 			}
 		}
-		System.out.println(output);
+
+		if (found == true && confirm.equalsIgnoreCase("Yes")) {
+			System.out.println(output);
+		} else {
+			System.out.println("No match found, or error input");
+		}
+
+		return output;
+
 	}
 
 	public static void updateHoldings(ArrayList<MoneyHolding> moneyList) {
@@ -429,6 +386,7 @@ public class C206_CaseStudy {
 	}
 
 	public static void addTransaction(ArrayList<history> transHistory) {
+
 		Helper.line(40, "=");
 		System.out.println("ADD TRANSACTION");
 		Helper.line(40, "=");
@@ -459,6 +417,49 @@ public class C206_CaseStudy {
 
 		}
 		System.out.println("Transaction has been added!");
+		System.out.println(output);
+	}
+
+	public static void addHoldings(ArrayList<MoneyHolding> moneyList) {
+		double CurrentFloat = 100000;
+		String Currency = Helper.readString("Currency (ISO): ");
+		double add1 = Helper.readDouble("Value: ");
+
+		String output = String.format("%-10s \n", "Holding Amount: ");
+		// double total =+ (hold1.getholdingAmt());
+		double add2 = add1 + CurrentFloat;
+		if (add2 > CurrentFloat) {
+			CurrentFloat = add2;
+		}
+		for (int i = 0; i < moneyList.size(); i++) {
+			MoneyHolding t = moneyList.get(i);
+			if (Currency.equalsIgnoreCase(t.getIso())) {
+				t.setHoldingAmt(CurrentFloat);
+				output += String.format("%-10.2f \n", t.getHoldingAmt());
+			}
+
+		}
+		System.out.println(output);
+	}
+
+	public static void deleteHoldings(ArrayList<MoneyHolding> moneyList) {
+		double CurrentFloat = 100000;
+		String Currency = Helper.readString("Currency (ISO): ");
+		double minus1 = Helper.readDouble("Value: ");
+
+		String output = String.format("%-10s \n", "Holding Amount: ");
+		// double MinusValue = CurrentFloat - hold2.getholdingAmt();
+		double minus2 = CurrentFloat - minus1;
+		if (minus2 < CurrentFloat) {
+			CurrentFloat = minus2;
+		}
+		for (int i = 0; i < moneyList.size(); i++) {
+			MoneyHolding t = moneyList.get(i);
+			if (Currency.equalsIgnoreCase(t.getIso())) {
+				t.setHoldingAmt(CurrentFloat);
+				output += String.format("%-10.2f \n", t.getHoldingAmt());
+			}
+		}
 		System.out.println(output);
 	}
 
